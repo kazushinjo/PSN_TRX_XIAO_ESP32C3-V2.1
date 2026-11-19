@@ -78042,10 +78042,10 @@
 		(layer "Edge.Cuts")
 		(uuid "9bab4fd8-4312-44a7-89de-337916611f10")
 	)
-	(gr_text "Designed by JA6FUF"
-		(at 152.5 145.235 0)
+	(gr_text "V2 Ver 1.4"
+		(at 151.300001 148.399999 0)
 		(layer "F.SilkS")
-		(uuid "e0c65c78-6d73-44b8-b18b-405fcb2ff3c2")
+		(uuid "b9e1a638-9b79-4afa-850b-ed8587ccb413")
 		(effects
 			(font
 				(size 1.5 1.5)
@@ -78053,10 +78053,10 @@
 			)
 		)
 	)
-	(gr_text "V2 Ver 1.4"
-		(at 152.5 147.735 0)
+	(gr_text "Designed by JA6FUF"
+		(at 152.5 145.235 0)
 		(layer "F.SilkS")
-		(uuid "b9e1a638-9b79-4afa-850b-ed8587ccb413")
+		(uuid "e0c65c78-6d73-44b8-b18b-405fcb2ff3c2")
 		(effects
 			(font
 				(size 1.5 1.5)
