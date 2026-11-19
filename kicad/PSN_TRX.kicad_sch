@@ -19984,7 +19984,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Rect_L7.2mm_W3.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2"
+		(property "Footprint" "PSN_TRX:C_Rect_L8.0mm_W5.0mm_P5.00mm_Rubycon_F2D"
 			(at 803.91 607.06 0)
 			(hide yes)
 			(show_name no)

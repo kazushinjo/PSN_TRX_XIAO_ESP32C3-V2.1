@@ -16,7 +16,7 @@
 "C56","47u","Capacitor_THT:CP_Radial_D5.0mm_P2.00mm","1",""
 "C57,C62,C65,C70-C73","1u","Capacitor_THT:CP_Radial_D5.0mm_P2.00mm","7",""
 "C59","0.01u","PSN_TRX:C_Radial_D5.0mm_P2.00mm_CPpad","1",""
-"C60","0.068u","Capacitor_THT:C_Rect_L7.2mm_W3.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2","1",""
+"C60","0.068u","PSN_TRX:C_Rect_L8.0mm_W5.0mm_P5.00mm_Rubycon_F2D","1",""
 "C66-C69","3300p","Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm","4",""
 "C76-C79","47PF","Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm","4",""
 "C80,C81","0.001u","Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm","2",""

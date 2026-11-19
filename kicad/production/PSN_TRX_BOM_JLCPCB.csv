@@ -16,7 +16,7 @@ Comment,Designator,Footprint,LCSC Part #
 47u,C56,CP_Radial_D5.0mm_P2.00mm,
 1u,"C57,C62,C65,C70,C71,C72,C73",CP_Radial_D5.0mm_P2.00mm,
 0.01u,C59,C_Radial_D5.0mm_P2.00mm_CPpad,
-0.068u,C60,C_Rect_L7.2mm_W3.5mm_P5.00mm_FKS2_FKP2_MKS2_MKP2,
+0.068u,C60,C_Rect_L8.0mm_W5.0mm_P5.00mm_Rubycon_F2D,
 3300p,"C66,C67,C68,C69",C_Disc_D5.0mm_W2.5mm_P2.50mm,
 47PF,"C76,C77,C78,C79",C_Disc_D5.0mm_W2.5mm_P2.50mm,
 0.001u,"C80,C81",C_Disc_D5.0mm_W2.5mm_P2.50mm,
