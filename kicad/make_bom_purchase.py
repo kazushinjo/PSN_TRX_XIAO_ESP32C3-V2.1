@@ -218,7 +218,11 @@ def section_of(ref, fp):
         return 'マイコンモジュール'
     prefix = re.match(r'[A-Za-z]+', ref).group(0)
     if prefix == 'C':
-        return 'コンデンサ（電解）' if 'cp_radial' in fp.lower() else 'コンデンサ（セラミック）'
+        if 'cp_radial' in fp.lower():
+            return 'コンデンサ（電解）'
+        if 'c_rect' in fp.lower():
+            return 'コンデンサ（フィルム）'
+        return 'コンデンサ（セラミック）'
     return {
         'R': '抵抗', 'VR': '半固定抵抗', 'TC': 'トリマコンデンサ', 'L': 'コイル', 'RFC': 'コイル',
         'D': 'ダイオード', 'Q': 'トランジスタ・FET', 'IC': 'IC・レギュレータ・モジュール',
@@ -227,7 +231,7 @@ def section_of(ref, fp):
     }.get(prefix, 'その他')
 
 
-SECTION_ORDER = ['抵抗', '半固定抵抗', 'コンデンサ（セラミック）', 'コンデンサ（電解）',
+SECTION_ORDER = ['抵抗', '半固定抵抗', 'コンデンサ（セラミック）', 'コンデンサ（フィルム）', 'コンデンサ（電解）',
                  'トリマコンデンサ', 'コイル', 'ダイオード', 'トランジスタ・FET', '水晶振動子',
                  'IC・レギュレータ・モジュール', 'マイコンモジュール', 'トランス・リレー',
                  'コネクタ', 'パネル部品（基板非搭載）']
