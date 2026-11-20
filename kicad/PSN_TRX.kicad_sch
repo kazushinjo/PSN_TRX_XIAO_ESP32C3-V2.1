@@ -4869,7 +4869,7 @@
 					)
 				)
 			)
-			(property "Footprint" "Package_SO:TSSOP-8_4.4x3mm_P0.65mm"
+			(property "Footprint" "PSN_TRX:NJM2594V_SIP7_Akizuki_AE-SSOP8-SIP7"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -4891,7 +4891,7 @@
 					)
 				)
 			)
-			(property "Description" "Double-balanced modulator/demodulator (NJR NJM2594V, SSOP8 0.65mm)"
+			(property "Description" "Double-balanced modulator/demodulator NJM2594V on Akizuki SIP7 module 113476 (AE-SSOP8-SIP7-NJM2594V, uPC1037HA pinout, pin 8 NC omitted)"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -5035,24 +5035,6 @@
 						)
 					)
 					(number "7"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -10.16 0 0)
-					(length 2.54)
-					(name "NC"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "8"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -10236,10 +10218,6 @@
 		(uuid "3712321f-dc9f-49ce-bc61-3d0058c8af7a")
 	)
 	(no_connect
-		(at 727.71 127)
-		(uuid "49759ede-07fe-4629-9157-1bc9a66b2b50")
-	)
-	(no_connect
 		(at 356.87 139.7)
 		(uuid "5672ff0a-bf2d-4f95-9501-5109828f1268")
 	)
@@ -10254,10 +10232,6 @@
 	(no_connect
 		(at 786.13 193.04)
 		(uuid "7ffacfbe-60bf-41f6-862e-15c2381f6566")
-	)
-	(no_connect
-		(at 336.55 139.7)
-		(uuid "9ad59cc2-40a0-4f7b-a61d-05342614ef17")
 	)
 	(no_connect
 		(at 464.82 481.33)
@@ -35369,7 +35343,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_SO:TSSOP-8_4.4x3mm_P0.65mm"
+		(property "Footprint" "PSN_TRX:NJM2594V_SIP7_Akizuki_AE-SSOP8-SIP7"
 			(at 346.71 139.7 0)
 			(hide yes)
 			(show_name no)
@@ -35391,7 +35365,7 @@
 				)
 			)
 		)
-		(property "Description" "第 1 混合（DBM）。表面実装 SSOP8（0.65mm ピッチ）、手はんだ"
+		(property "Description" "第 1 混合（DBM）。秋月 NJM2594V SIP 化基板（113476、7 ピン 2.54mm、NJM2594V 実装済み）"
 			(at 346.71 139.7 0)
 			(hide yes)
 			(show_name no)
@@ -46373,7 +46347,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_SO:TSSOP-8_4.4x3mm_P0.65mm"
+		(property "Footprint" "PSN_TRX:NJM2594V_SIP7_Akizuki_AE-SSOP8-SIP7"
 			(at 737.87 127 0)
 			(hide yes)
 			(show_name no)
@@ -46395,7 +46369,7 @@
 				)
 			)
 		)
-		(property "Description" "積検波（DBM）。表面実装 SSOP8、手はんだ"
+		(property "Description" "積検波（DBM）。秋月 NJM2594V SIP 化基板（113476、7 ピン 2.54mm、NJM2594V 実装済み）"
 			(at 737.87 127 0)
 			(hide yes)
 			(show_name no)

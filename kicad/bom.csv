@@ -98,7 +98,7 @@
 "RFC1","10uH","Inductor_THT:L_Axial_L14.0mm_D4.5mm_P15.24mm_Horizontal_Fastron_LACC","1",""
 "TC1-TC3","30p","PSN_TRX:C_Trimmer_TMCV01","3",""
 "TC4","10p","PSN_TRX:C_Trimmer_TMCV01","1",""
-"U1,U2","NJM2594V","Package_SO:TSSOP-8_4.4x3mm_P0.65mm","2",""
+"U1,U2","NJM2594V","PSN_TRX:NJM2594V_SIP7_Akizuki_AE-SSOP8-SIP7","2",""
 "U3","AD8307ANZ","Package_DIP:DIP-8_W7.62mm","1",""
 "U4","78L05","Package_TO_SOT_THT:TO-92_Inline","1",""
 "U5","NJM2904","Package_DIP:DIP-8_W7.62mm","1",""

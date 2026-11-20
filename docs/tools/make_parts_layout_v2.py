@@ -58,6 +58,7 @@ A4 = (11.69, 8.27)
 FP = {f['ref']: f for f in board['fps']}
 stages = notes['stages']
 member = {r[0]: si for si, s in enumerate(stages) for r in s['rows']}
+SNO = [int(s['short'].split()[0]) for s in stages]   # 段階の番号（段階名の先頭の数字）
 VAL = {r[0]: r[1] for s in stages for r in s['rows']}   # 値は表のものを優先（L15 330nH など、基板データより新しい）
 xs = [p[0] for e in board['edge'] for p in (e.get('p') or [e.get('a'), e.get('b')]) if p]
 ys = [p[1] for e in board['edge'] for p in (e.get('p') or [e.get('a'), e.get('b')]) if p]
@@ -384,7 +385,7 @@ ADJ = {a['no']: a for a in notes['adjust']}
 adj_stage = {}
 for si, s in enumerate(stages):
     for n in s.get('adj', []):
-        adj_stage.setdefault(n, []).append(str(si))
+        adj_stage.setdefault(n, []).append(str(SNO[si]))
 pages_total = 1 + 2 * len(stages) + 1 + sum(1 for s in stages if s.get('detail'))
 pdf = PdfPages(OUT, metadata={'Title': 'PSN_TRX_XIAO_ESP32C3-V2 部品実装図（段階組立・通電確認）', 'Author': 'JA6FUF'})
 
@@ -404,12 +405,12 @@ for f in board['fps']:
 for si, s in enumerate(stages):
     pts = [((FP[r[0]]['bbox'][0][0] + FP[r[0]]['bbox'][1][0]) / 2, (FP[r[0]]['bbox'][0][1] + FP[r[0]]['bbox'][1][1]) / 2) for r in s['rows']]
     cx = sum(p[0] for p in pts) / len(pts); cy = sum(p[1] for p in pts) / len(pts)
-    ax.text(cx, cy, str(si), ha='center', va='center', fontsize=9, color='white', zorder=40, fontproperties=BOLD,
+    ax.text(cx, cy, str(SNO[si]), ha='center', va='center', fontsize=9, color='white', zorder=40, fontproperties=BOLD,
             bbox=dict(boxstyle='circle,pad=0.25', fc=darker(s['color'], 0.6), ec='white', lw=0.8))
 rows = []
 for si, s in enumerate(stages):
     adj = '・'.join(str(n) for n in s.get('adj', [])) or '—'
-    rows.append([str(si), s['name'], str(len(s['rows'])), s['checks'][0]['where'] if si == 0 else
+    rows.append([str(SNO[si]), s['name'], str(len(s['rows'])),
                  ' / '.join(c['where'].split('（')[0] for c in s['checks'][:2]), adj])
 wrapped_table(fig, [0.525, 0.36, 0.46, 0.525], ['段階', '内容', '点数', '通電して確かめる主な所', '調整'], rows,
               [0.06, 0.29, 0.06, 0.44, 0.15], HEAD_NAVY)
@@ -417,7 +418,7 @@ gen = ['・段階ごとに、組み立てのページ（部品表）→ 通電�
        '・通電は電流制限つきの安定化電源 12V で（段階 1 は 100mA、2〜12 は 300mA、13 は 500mA）。はんだ付けは必ず電源を切って。',
        '・電圧は GND（H1〜H4 の取付穴、J2 の 2 番）基準。まだ付けていない部品の穴（パッド）で測ってもよい。',
        '・前の段ができていないうちは、次の段の入力の穴に信号発生器から 0.01µF を通して信号を入れて確かめる（なければ飛ばして次へ）。',
-       '・U1・U2（表面実装）は段階 0 で最初に付けるが、電源が来るのは段階 5（U4 78L05）から。',
+       '・U1・U2 は秋月の NJM2594V SIP 化基板（表面実装なし）。背が高いので、それぞれ段階 8・5 の最後に縦に立てて付ける。',
        '・D0（送信検出）・D9（エンコーダの SW）は起動設定ピン。PTT やつまみを押したまま電源を入れない。',
        '・送信（段階 10〜13）は PTT を押している間だけ。段階 13 は ANT に必ず 50Ω ダミーロードをつなぐ。']
 yy = 0.34
@@ -434,7 +435,7 @@ for si, s in enumerate(stages):
     tcol = s['color']
     # (a) 組み立て
     fig = plt.figure(figsize=A4)
-    header(fig, f"段階 {si}　{s['name']}（{len(s['rows'])} 点）— 組み立て", page, pages_total)
+    header(fig, f"段階 {SNO[si]}　{s['name']}（{len(s['rows'])} 点）— 組み立て", page, pages_total)
     memo = s.get('memo', [])
     ax = board_axes(fig, [0.01, 0.06, 0.53, 0.80 - len(memo) * 0.022])
     draw_stage_board(ax, si)
@@ -452,7 +453,7 @@ for si, s in enumerate(stages):
 
     # (b) 通電・確認
     fig = plt.figure(figsize=A4)
-    header(fig, f"段階 {si}　{s['name']} — 通電・確認", page, pages_total)
+    header(fig, f"段階 {SNO[si]}　{s['name']} — 通電・確認", page, pages_total)
     fig.text(0.015, 0.878, '電源: ' + s['power'], fontsize=FS, va='top', fontproperties=BOLD, color='black')
     ax = board_axes(fig, [0.01, 0.04, 0.47, 0.80])
     draw_stage_board(ax, si, label_cur=True)
@@ -472,7 +473,7 @@ for si, s in enumerate(stages):
     if s.get('note'):
         fig.text(0.49, yy, '注意: ' + s['note'], fontsize=FS, va='top', fontproperties=BOLD, color='black')
         yy -= 0.026
-    nxt = f"→ 全部合ったら電源を切り、段階 {si + 1}（{stages[si + 1]['name']}）へ" if si + 1 < len(stages) else '→ 組み立て・調整の完了。ケースに組み込む'
+    nxt = f"→ 全部合ったら電源を切り、段階 {SNO[si + 1]}（{stages[si + 1]['name']}）へ" if si + 1 < len(stages) else '→ 組み立て・調整の完了。ケースに組み込む'
     fig.text(0.49, 0.045, nxt, fontsize=FS, va='center', fontproperties=BOLD, color='black')
     fig.text(0.49, 0.022, '赤の番号 = 表の No の測る所（四角 = 部品、丸 = その部品のピン・穴）', fontsize=FS, va='center', color='black')
     pdf.savefig(fig); plt.close(fig); page += 1
