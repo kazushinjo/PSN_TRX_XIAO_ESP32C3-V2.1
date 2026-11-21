@@ -97,7 +97,7 @@ def main():
     ax[1].set_ylabel('振幅差 I/Q [dB]'); ax[1].set_ylim(-1, 1)
     ax[1].set_xlabel('音声周波数 [Hz]（灰色は通過域 300〜2700 Hz）。逆側帯波の抑圧は「不要側波帯の抑圧比」の図'); ax[1].set_xlim(F[0], F[-1])
     ax[0].legend(fontsize=9, loc='upper center')
-    fig.suptitle('PSN_TRX-V2 送信 AF の I/Q の位相差と振幅差（シミュレーション）')
+    fig.suptitle('PSN_TRX-V2.1 送信 AF の I/Q の位相差と振幅差（シミュレーション）')
     fig.tight_layout()
     out = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'docs', 'images', 'iq_phase_scan.png')
     fig.savefig(out, dpi=110); print('→', out)

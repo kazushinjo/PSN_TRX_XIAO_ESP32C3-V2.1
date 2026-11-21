@@ -1,4 +1,4 @@
-# PSN_TRX_XIAO_ESP32C3-V2
+# PSN_TRX_XIAO_ESP32C3-V2.1
 
 Seeed Studio XIAO ESP32C3 + Si5351 を使用した PSN 方式 SSB トランシーバー（KiCad 10.0）。
 

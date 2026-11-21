@@ -31,7 +31,7 @@ OUT = sys.argv[2]
 PNGDIR = sys.argv[3] if len(sys.argv) > 3 else None
 FP = {f['ref']: f for f in board['fps']}
 A4 = (11.69, 8.27)
-TITLE = 'PSN_TRX_XIAO_ESP32C3-V2　間違いやすい部品の部品形（寸法入り）'
+TITLE = 'PSN_TRX_XIAO_ESP32C3-V2.1　間違いやすい部品の部品形（寸法入り）'
 SUB = '基板 Ver 2.1.0・2026-11-22。部品面から見た図で、向きは基板に置いたとおり（上 = 基板の奥）。寸法は mm。□（四角）パッド = 1 番ピン'
 
 
@@ -429,7 +429,7 @@ def p_misc(fig):
 
 if __name__ == '__main__':
     total = len(pages)
-    with PdfPages(OUT, metadata={'Title': 'PSN_TRX_XIAO_ESP32C3-V2 間違いやすい部品の部品形', 'Author': 'JA6FUF'}) as pdf:
+    with PdfPages(OUT, metadata={'Title': 'PSN_TRX_XIAO_ESP32C3-V2.1 間違いやすい部品の部品形', 'Author': 'JA6FUF'}) as pdf:
         for i, fn in enumerate(pages, 1):
             fig = plt.figure(figsize=A4)
             header(fig, i, total)

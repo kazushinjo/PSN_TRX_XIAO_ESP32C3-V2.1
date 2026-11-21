@@ -42,7 +42,7 @@ board = json.load(open(sys.argv[1]))
 notes = json.load(open(sys.argv[2]))
 OUT = sys.argv[3]
 
-TITLE = 'PSN_TRX_XIAO_ESP32C3-V2　部品実装図（段階組立・通電確認）'
+TITLE = 'PSN_TRX_XIAO_ESP32C3-V2.1　部品実装図（段階組立・通電確認）'
 SUB = '基板 134.1 × 129.7 mm / 4 層 / 基板 Ver 2.1.0　部品実装図（段階組立）　2026-11-22　調整の番号は manual/調整手順.md'
 COPPER = '#c8762f'
 FAB = '#333333'
@@ -387,7 +387,7 @@ for si, s in enumerate(stages):
     for n in s.get('adj', []):
         adj_stage.setdefault(n, []).append(str(SNO[si]))
 pages_total = 1 + 2 * len(stages) + 1 + sum(1 for s in stages if s.get('detail'))
-pdf = PdfPages(OUT, metadata={'Title': 'PSN_TRX_XIAO_ESP32C3-V2 部品実装図（段階組立・通電確認）', 'Author': 'JA6FUF'})
+pdf = PdfPages(OUT, metadata={'Title': 'PSN_TRX_XIAO_ESP32C3-V2.1 部品実装図（段階組立・通電確認）', 'Author': 'JA6FUF'})
 
 # ---- 1. 全体図と段階の一覧
 fig = plt.figure(figsize=A4)

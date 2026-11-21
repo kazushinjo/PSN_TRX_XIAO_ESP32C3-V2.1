@@ -76,7 +76,7 @@ def main():
     a.set_title('試験トーン 1 kHz（tone 1000、USB）を送信したときのスペクトル', fontsize=11)
     a.grid(True, alpha=0.4); a.legend(fontsize=8.5, loc='upper right', bbox_to_anchor=(1, 0.78))
 
-    fig.suptitle('PSN_TRX-V2 不要側波帯の抑圧比（シミュレーション）', fontsize=13)
+    fig.suptitle('PSN_TRX-V2.1 不要側波帯の抑圧比（シミュレーション）', fontsize=13)
     fig.text(0.01, 0.005, '計算: U7 の複素 FIR（tx_dsp.cpp と同じ係数）× PDM 出力〜変調器入力（ngspice）。'
              '搬送波の漏れと RF 側のずれ（参考の線を除く）は含まない。', fontsize=8, color='0.35')
     fig.tight_layout(rect=(0, 0.02, 1, 0.98))

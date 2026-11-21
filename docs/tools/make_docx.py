@@ -143,8 +143,8 @@ SIM_ROWS = [
 # ---------------------------------------------------------------------------
 def logic_report():
     D = Doc('PSN_TRX_回路図論理検証レポート.docx')
-    D.title('PSN_TRX_XIAO_ESP32C3-V2 回路図 論理検証レポート')
-    D.p('対象リポジトリ: kazushinjo/PSN_TRX_XIAO_ESP32C3-V2')
+    D.title('PSN_TRX_XIAO_ESP32C3-V2.1 回路図 論理検証レポート')
+    D.p('対象リポジトリ: kazushinjo/PSN_TRX_XIAO_ESP32C3-V2.1')
     D.p(f'対象ファイル: kicad/PSN_TRX.kicad_sch（{VER}: 基板実装 282 点＋パネル部品 VR1・VR2・LED1・160 ネット）、PSN_TRX_XIAO_ESP32C3/PSN_TRX_XIAO_ESP32C3.ino・tx_dsp.cpp')
     D.p(f'検証日: {DATE}（基板シルク {VER}。部品番号は 2026-11-05 に信号の流れの順に振り直した後のもの。C109・C110・R80・J12 は V2 Ver 1.2 で追加）')
 
@@ -252,9 +252,9 @@ def logic_report():
 # ---------------------------------------------------------------------------
 def eval_report():
     D = Doc('PSN_TRX_評価試験報告書.docx')
-    D.p('PSN_TRX_XIAO_ESP32C3-V2', size=18, bold=True)
+    D.p('PSN_TRX_XIAO_ESP32C3-V2.1', size=18, bold=True)
     D.p('評価試験報告書', size=16)
-    D.p('対象リポジトリ: kazushinjo/PSN_TRX_XIAO_ESP32C3-V2')
+    D.p('対象リポジトリ: kazushinjo/PSN_TRX_XIAO_ESP32C3-V2.1')
     D.p('対象ファイル: kicad/PSN_TRX.kicad_sch, kicad/PSN_TRX.kicad_pcb, PSN_TRX_XIAO_ESP32C3/PSN_TRX_XIAO_ESP32C3.ino, PSN_TRX_XIAO_ESP32C3/tx_dsp.cpp')
     D.p(f'試験日: {DATE}（基板シルク {VER}）')
     D.p('試験者: JA6FUF (kazushinjo) / Claude Code 支援')
@@ -398,7 +398,7 @@ def eval_report():
 # ---------------------------------------------------------------------------
 def vfo_spec():
     D = Doc('PSN_TRX_VFO改造仕様書.docx')
-    D.title('PSN_TRX_XIAO_ESP32C3-V2 VFO 仕様書')
+    D.title('PSN_TRX_XIAO_ESP32C3-V2.1 VFO 仕様書')
     D.p('XIAO ESP32C3 ＋ Si5351 による局発・BFO・送信キャリアと、送信 I/Q の生成', size=12)
     D.p(f'発行日: {DATE}（基板シルク {VER}・現行スケッチに対応）')
 
@@ -601,13 +601,13 @@ def vfo_spec():
 # ---------------------------------------------------------------------------
 def assembly():
     D = Doc('PSN_TRX_組み立て説明書.docx')
-    D.title('PSN_TRX_XIAO_ESP32C3-V2 組み立て説明書')
+    D.title('PSN_TRX_XIAO_ESP32C3-V2.1 組み立て説明書')
     D.p('50MHz 帯 PSN 方式 SSB トランシーバ（受信 IF 12MHz シングルスーパー）　XIAO ESP32C3 制御版', size=14)
     D.p(f'対象基板: PSN_TRX.kicad_pcb（4 層 134.1 × 129.7mm、M3 取付穴 ×4、基板シルク {VER}）')
     D.p(f'発行日: {DATE}')
 
     D.h('1. はじめに')
-    D.p('この説明書は、50MHz 帯の PSN（位相シフト網）方式 SSB トランシーバ基板「PSN_TRX_XIAO_ESP32C3-V2」の部品の取り付け・配線・調整をまとめたものです。')
+    D.p('この説明書は、50MHz 帯の PSN（位相シフト網）方式 SSB トランシーバ基板「PSN_TRX_XIAO_ESP32C3-V2.1」の部品の取り付け・配線・調整をまとめたものです。')
     D.p('受信は、RF 増幅（2SK192A-BL のカスコード）→ 第 1 混合（NJM2594V）→ 12MHz の水晶ラダーフィルタ → IF 増幅 → 積検波のシングルスーパーです。送信は、Si5351 の CLK0/CLK1 の直交出力を平衡変調器へ直接入れる PSN 方式で、音声の 90° は XIAO ESP32C3（U7）のファームウェア（複素 FIR）で作ります。PA 出力は 7 素子 LPF＋2 倍波トラップです。組み立て後に、manual/調整手順.md の 13 の調整（受信 7・送信 6）が必要です。部品番号・配置は基板シルク V2 Ver 1.2（部品番号は 2026-11-05 の振り直し後、C109・C110・R80・J12 は V2 Ver 1.2 で追加）のものです。')
     D.h('1.1 安全上の注意', 2)
     D.b('はんだ付けの作業中はやけどに注意してください。作業台を片づけ、燃えやすい物を近づけないこと。',

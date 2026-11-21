@@ -109,7 +109,7 @@ ov.plot([xr, xr], [TM, TM + 100], color='black', lw=0.8)
 for k in range(0, 101, 10):
     ov.plot([xr, xr - (2.5 if k % 50 == 0 else 1.5)], [TM + k, TM + k], color='black', lw=0.5)
 ov.text(xr + 2, TM + 50, '100 mm', rotation=90, va='center', fontsize=7)
-ov.text(LM, 12, 'PSN_TRX_XIAO_ESP32C3-V2　原寸確認図（部品面から見た図、1:1）', fontsize=11, fontproperties=BOLD)
+ov.text(LM, 12, 'PSN_TRX_XIAO_ESP32C3-V2.1　原寸確認図（部品面から見た図、1:1）', fontsize=11, fontproperties=BOLD)
 ov.text(LM, 18, f'基板 {BW:.1f} × {BH:.1f} mm　{VER}。必ず「実際のサイズ（100%）」で印刷する（「用紙に合わせる」は使わない）。', fontsize=7)
 ov.text(LM, 22.5, '印刷したら、上の基板の幅と下・右の 100mm の目盛りを定規で測り、ずれが 0.5mm 以内であることを確かめてから使う。', fontsize=7)
 notes = [
@@ -193,7 +193,7 @@ ov.plot([LM, LM + 100], [yb, yb], color='black', lw=0.8)
 for k in range(0, 101, 10):
     ov.plot([LM + k, LM + k], [yb, yb - (2.5 if k % 50 == 0 else 1.5)], color='black', lw=0.5)
 ov.text(LM + 50, yb + 4, '100 mm', ha='center', fontsize=7)
-ov.text(LM, 12, 'PSN_TRX_XIAO_ESP32C3-V2　原寸確認図（2）主な部品のピン名・信号名（部品面から見た図、1:1）', fontsize=10, fontproperties=BOLD)
+ov.text(LM, 12, 'PSN_TRX_XIAO_ESP32C3-V2.1　原寸確認図（2）主な部品のピン名・信号名（部品面から見た図、1:1）', fontsize=10, fontproperties=BOLD)
 ov.text(LM, 18, f'{VER}。1 ページ目と同じく 100% で印刷する。赤字の部品のパッドの横にピン名（IC・モジュール）または信号名（コネクタ）を書いた。', fontsize=7)
 ov.text(LM, 22.5, '□ のパッドが 1 番ピン。実物を当てたとき、1 番ピンの向きと信号の並びが合っているかを確かめる。', fontsize=7)
 notes2 = [
@@ -205,7 +205,7 @@ notes2 = [
 ]
 for i, t in enumerate(notes2):
     ov.text(LM, yb + 14 + i * 5.2, t, fontsize=6.6)
-with PdfPages(OUT, metadata={'Title': 'PSN_TRX_XIAO_ESP32C3-V2 原寸確認図', 'Author': 'JA6FUF'}) as pdf:
+with PdfPages(OUT, metadata={'Title': 'PSN_TRX_XIAO_ESP32C3-V2.1 原寸確認図', 'Author': 'JA6FUF'}) as pdf:
     pdf.savefig(fig)
     pdf.savefig(fig2)
 print('saved', OUT, f'{BW:.2f} x {BH:.2f} mm')
