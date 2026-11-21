@@ -7682,6 +7682,235 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Transistor_BJT:Q_NPN_BEC"
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "Q"
+				(at 5.08 1.27 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "Q_NPN_BEC"
+				(at 5.08 -1.27 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 5.08 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "NPN transistor, emitter/collector/base"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Sim.Device" "NPN"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Sim.Pins" "1=E 2=C 3=B"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "BJT"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Q_NPN_BEC_0_1"
+				(polyline
+					(pts
+						(xy -2.54 0) (xy 0.635 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 1.905) (xy 0.635 -1.905)
+					)
+					(stroke
+						(width 0.508)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 1.27 0)
+					(radius 2.8194)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "Q_NPN_BEC_1_1"
+				(polyline
+					(pts
+						(xy 0.635 0.635) (xy 2.54 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.635 -0.635) (xy 2.54 -2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -1.778) (xy 1.778 -1.27) (xy 2.286 -2.286) (xy 1.27 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "E"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "C"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "B"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Transistor_BJT:Q_PNP_ECB"
 			(pin_names
 				(offset 0)
@@ -12807,16 +13036,6 @@
 	)
 	(wire
 		(pts
-			(xy 294.64 463.55) (xy 297.18 463.55)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "68636e3d-2be7-45fb-97f7-cde2149f1732")
-	)
-	(wire
-		(pts
 			(xy 591.82 322.58) (xy 591.82 330.2)
 		)
 		(stroke
@@ -16027,16 +16246,6 @@
 	)
 	(wire
 		(pts
-			(xy 304.8 463.55) (xy 313.69 463.55)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "eb4a5704-f6dd-4e44-99f0-9569f239fe32")
-	)
-	(wire
-		(pts
 			(xy 703.58 728.98) (xy 707.39 728.98)
 		)
 		(stroke
@@ -17954,7 +18163,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 300.99 463.55 270)
+		(at 298.45 463.55 270)
 		(mirror x)
 		(unit 1)
 		(body_style 1)
@@ -17965,7 +18174,7 @@
 		(dnp no)
 		(uuid "08141f39-1f9b-484a-a3e4-2dcbc83ffef7")
 		(property "Reference" "C94"
-			(at 300.99 467.36 90)
+			(at 299.72 467.36 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -17974,8 +18183,8 @@
 				)
 			)
 		)
-		(property "Value" "0.001u"
-			(at 300.99 469.9 90)
+		(property "Value" "0.01u"
+			(at 299.72 469.90 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -17984,8 +18193,8 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
-			(at 284.48 463.55 0)
+		(property "Footprint" "PSN_TRX:C_Disc_W4.5mm_T3.2mm_P5.00mm_Murata_RDE5C1H103J1K"
+			(at 281.94 463.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17996,7 +18205,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 284.48 463.55 0)
+			(at 281.94 463.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18007,7 +18216,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 284.48 463.55 0)
+			(at 281.94 463.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -19012,7 +19221,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Transistor_BJT:Q_NPN_ECB")
+		(lib_id "Transistor_BJT:Q_NPN_BEC")
 		(at 419.1 476.25 0)
 		(mirror y)
 		(unit 1)
@@ -19033,7 +19242,7 @@
 				)
 			)
 		)
-		(property "Value" "2SC1815"
+		(property "Value" "KSP10"
 			(at 421.64 465.582 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20846,7 +21055,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "39p"
+		(property "Value" "270p"
 			(at 292.1 468.63 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20879,7 +21088,7 @@
 				)
 			)
 		)
-		(property "Description" "PA LPF 入力側シャント (NP0)"
+		(property "Description" "PA 出力 π 整合の 50Ω 側シャント兼 LPF 入力側シャント (C0G)"
 			(at 276.86 467.36 0)
 			(hide yes)
 			(show_name no)
@@ -54543,6 +54752,264 @@
 			)
 		)
 	)
+	(wire
+		(pts
+			(xy 309.88 463.55) (xy 313.69 463.55)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2f4c15f8-acef-4958-ab3b-26bd3ba9cc6f")
+	)
+	(junction
+		(at 309.88 463.55)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a710be53-62a0-4e67-b467-ae1699755949")
+	)
+	(symbol
+		(lib_id "Device:L")
+		(at 306.07 463.55 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "3454d1b6-a0a9-4fff-9619-e2252ba4f366")
+		(property "Reference" "L21"
+			(at 306.07 458.93 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "62nH"
+			(at 306.07 461.00 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "PSN_TRX:L_AirCore_D4.2mm_L3.8mm_P5.08mm_5T"
+			(at 288.29 463.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 288.29 463.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "PA 出力 π 整合の直列 L（空芯 内径 φ3mm・0.6mm 線 5 回巻き、長さ約 3.8mm。巻き線の間隔で合わせる）"
+			(at 288.29 463.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b27fcdf7-3999-42bf-bb32-f963c8b04508")
+		)
+		(pin "2"
+			(uuid "0528ac16-4eea-453d-ba38-a3a2c7193e43")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "L21")
+					(unit 1)
+				)
+			)
+		)
+	)
+
+	(symbol
+		(lib_id "Device:C")
+		(at 309.88 467.36 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "b09fed2a-8cc0-4a28-99e8-563e19cbf54d")
+		(property "Reference" "C111"
+			(at 308.61 472.44 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "330p"
+			(at 308.61 474.98 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+			(at 292.10 467.36 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 292.10 467.36 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "PA 出力 π 整合のドレイン側シャント (C0G)"
+			(at 292.10 467.36 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "60d4bca1-2ef1-494b-a602-2647ef21c6b5")
+		)
+		(pin "2"
+			(uuid "cc3827dc-0599-4100-a6f4-f20616aaf008")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "C111")
+					(unit 1)
+				)
+			)
+		)
+	)
+
+	(symbol
+		(lib_id "power:GND")
+		(at 309.88 471.17 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "eab18369-44d2-4107-bb95-d7666de7f308")
+		(property "Reference" "#PWR201"
+			(at 309.88 477.52 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 309.88 476.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 309.88 471.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 309.88 471.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 309.88 471.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "ddcef6c4-9759-4b40-891b-d0d08fde00d1")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "#PWR201")
+					(unit 1)
+				)
+			)
+		)
+	)
+
+
 	(sheet_instances
 		(path "/"
 			(page "1")

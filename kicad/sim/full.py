@@ -10,8 +10,8 @@ from gen import *
 with contextlib.redirect_stdout(io.StringIO()):
     import rx                       # 受信部の回路（BPF・ラダー・IF 増幅）を読み込む（計算結果の表示は捨てる）
     import af
-from tran import tran, lin
-from rf import lpf
+from tran import tran, lin, lpf_h
+from rf import lpf, DRAIN, RD_OPT
 
 DIAL = 50.500e6
 BFO_USB = 11.9999e6                 # ファームウェアの初期値（BFO_USB_DEFAULT）
@@ -178,7 +178,7 @@ def coil7(ref, ct_used):
 PA_MODEL = ".model RD06 NMOS(LEVEL=1 VTO=3.0 KP=1.2 LAMBDA=0.01 RD=0.25 RS=0.05)"
 
 
-def tx_net(vi, vq, vr3=0.5, vr4=0.5, d4is=1.0, idq=0.1, vs=12.0, vr6=0.5, vr7=0.5):
+def tx_net(vi, vq, vr3=0.5, vr4=0.5, d4is=1.0, idq=0.2, vs=12.0, vr6=0.5, vr7=0.5):
     """局発（矩形波 3.3V、CLK1 は 90° 遅れ）→ LPF → VR3/VR4 → 変調器 → Q17 → Q18 → Q19 → LPF → 50Ω。
     vi・vq は変調器への音声（直流、L10・L11 の音声側）"""
     T = 1 / 50.5e6
@@ -195,7 +195,7 @@ def tx_net(vi, vq, vr3=0.5, vr4=0.5, d4is=1.0, idq=0.1, vs=12.0, vr6=0.5, vr7=0.
          f"VI ai 0 dc {vi}\nRI ai {pin('C82','1')} 1k", f"VQ aq 0 dc {vq}\nRQ aq {pin('C83','1')} 1k",
          coil7('L12', True),
          JFET('Q17', 'J2SK439'), R('R65'), C('C85'), coil7('L13', False), C('C86'),
-         C('C88'), BJT('Q18', 'Q2SC1815'), R('R66'), R('R67'), R('R68'), C('C89'),
+         C('C88'), BJT('Q18', 'QKSP10'), R('R66'), R('R67'), R('R68'), C('C89'),
          coil7('L14', False), C('C90'), C('C91'), C('C87'),
          C('C92'), L('L15', 0.2), C('C93'), R('R69'), R('R70'),
          f"CGS3 {pin('Q19','G')} 0 25p\nCGD3 {pin('Q19','G')} {pin('Q19','D')} 1.3p",
@@ -206,7 +206,7 @@ def tx_net(vi, vq, vr3=0.5, vr4=0.5, d4is=1.0, idq=0.1, vs=12.0, vr6=0.5, vr7=0.
     r23 = vg * (330 + 500) / vs                      # ワイパー〜GND の抵抗
     e.append(POT('VR7', 1 - r23 / 500))
     net = lpf(1.0, 18e-12, 11e-12, 1.0, 6.5e-12)     # PA ドレイン → LPF → 50Ω（rf.py と同じ）
-    net = net.replace('VS src 0 AC 2\n', '').replace(f"RS src {pin('C94','1')} 50\n", '')
+    net = net.replace('VS src 0 AC 2\n', '').replace(f"RS src {DRAIN} {RD_OPT}\n", '')
     net = net.replace('RRFC rfc 0 0.3', f"RRFC rfc {node('/TX12V')} 0.3")
     net = re.sub(r'\n\.ac .*', '', net)
     models = MODELS.replace('{hfe1815}', '250').replace('{hfe1923}', '100').replace('{hfe2120}', '180')
@@ -221,19 +221,42 @@ def phasor(t, v, f0, ncyc):
 
 
 def tx_point(**kw):
+    """出力の基本波（フェーザ）・電力、2〜5 倍波 [dBc]、TX12V の電流。
+    高調波は C98 の点（π 整合の 50Ω 側）の電圧に LPF の通り方（交流解析）を掛けて出す"""
     tran(tx_net(**kw), 0.1e-9, 12e-6, 10e-6)
     t = lin(0.1e-9)
     vo = ngs.vec(pin('C102', '1'))
     p = phasor(t, vo, 50.5e6, 80)
-    h2 = abs(phasor(t, vo, 101e6, 80))
-    return p, (abs(p) / math.sqrt(2)) ** 2 / 50, h2
+    vc = ngs.vec(pin('C98', '1')); i12 = -sum(ngs.vec('i(vtx)')) / len(t)
+    ph = [phasor(t, vc, 50.5e6 * m, 80) for m in range(1, 6)]   # lpf_h は別の計算を走らせるので、先にベクトルを読む
+    hc = [abs(ph[m - 1] * lpf_h(m)) for m in range(1, 6)]
+    hs = [db(x / hc[0]) for x in hc[1:]]
+    return p, (abs(p) / math.sqrt(2)) ** 2 / 50, hs, i12
+
+
+def imd():
+    """2 トーンの相互変調（I 側だけに 2 つの音声を入れ、出力の振幅・位相を音声の大きさの関数として準静的に表にして求める）"""
+    import numpy as np
+    print('  2 トーン（I 側に同じ大きさの 2 つの音声、出力の振幅・位相の表から準静的に計算。各トーン比）')
+    V = [0.0125 * i for i in range(1, 49)]
+    P = [tx_point(vi=v, vq=0)[0] for v in V]
+    ref = P[0] / abs(P[0]); P = [p / ref for p in P]
+    Vv = np.array([-x for x in V[::-1]] + [0] + V); Pp = np.array([-p for p in P[::-1]] + [0] + P)
+    print(f'    AM-PM（小信号 → 音声 {V[-1]*1e3:.0f}mV）: {np.degrees(np.angle(P[-1])):+.1f}°')
+    for peak in (0.1, 0.2, 0.3, 0.4, 0.6):
+        N = 8192; tt = np.arange(N) / N
+        x = peak / 2 * (np.cos(2 * np.pi * 40 * tt) + np.cos(2 * np.pi * 46 * tt))
+        y = np.interp(x, Vv, Pp.real) + 1j * np.interp(x, Vv, Pp.imag)
+        Y = np.abs(np.fft.fft(y)) / N
+        pep = (np.max(np.abs(y)) / np.sqrt(2)) ** 2 / 50
+        print(f'    尖頭の音声 {peak*1e3:3.0f}mV: 尖頭電力（PEP）{pep:4.2f}W  IM3 {20*np.log10(Y[34]/Y[40]):5.1f}dB  IM5 {20*np.log10(Y[28]/Y[40]):5.1f}dB')
 
 
 def transmitter():
     print()
     print('### 送信: 局発・変調器から PA・LPF・50Ω まで（50.5MHz の過渡解析、音声は直流で与える準静的な計算）')
-    print('  7T50（L14〜L12）は一次 0.5µH・二次リンク 2/7 巻・結合 0.85・Q 70 と仮定（実物の値で変わる）。PA は 2 乗特性の簡易モデル、Idq 100mA')
-    p0, w0, _ = tx_point(vi=0, vq=0)
+    print('  7T50（L14〜L12）は一次 0.5µH・二次リンク 2/7 巻・結合 0.85・Q 70 と仮定（実物の値で変わる）。Q18 は KSP10、PA は 2 乗特性の簡易モデル、Idq 200mA、π 整合（C111・L21・C98）')
+    p0, w0, _, _ = tx_point(vi=0, vq=0)
     print(f'  音声なし（VR5・VR6 は中点、ダイオードがそろっている）: キャリアの漏れ {w0*1e3:.3f}mW（{10*math.log10(max(w0,1e-15)/1e-3):.0f}dBm）')
     # VR5・VR6 を回して漏れを最小にする（粗く探してから細かく）
     best = (w0, 0.5, 0.5)
@@ -246,14 +269,18 @@ def transmitter():
                 w = tx_point(vi=0, vq=0, vr3=a3, vr4=a4)[1]
                 if w < best[0]: best = (w, a3, a4)
     print(f'  VR5 {best[1]:.2f}・VR6 {best[2]:.2f} に合わせると: キャリアの漏れ {best[0]*1e3:.4f}mW（{10*math.log10(max(best[0],1e-15)/1e-3):.0f}dBm）')
-    p1, w1, _ = tx_point(vi=0, vq=0, d4is=1.3)
+    p1, w1, _, _ = tx_point(vi=0, vq=0, d4is=1.3)
     print(f'  D4 の IS が 30% 大きいとき: キャリアの漏れ {w1*1e3:.3f}mW（{10*math.log10(max(w1,1e-15)/1e-3):.0f}dBm）→ VR5 で打ち消す')
-    print('  I 側だけに音声（直流）を入れたときの出力（50Ω）と 2 倍波')
-    for a in (0.02, 0.05, 0.1, 0.2, 0.4, 0.8):
-        p, w, h2 = tx_point(vi=a, vq=0)
-        print(f'    音声 {a*1e3:4.0f}mV: 出力 {w:6.3f}W（{10*math.log10(w/1e-3):5.1f}dBm）、2 倍波 {db(h2/abs(p)):+.0f}dBc')
-    pi, wi, _ = tx_point(vi=0.1, vq=0)
-    pq, wq, _ = tx_point(vi=0, vq=0.1)
+    print('  I 側だけに音声（直流）を入れたときの出力（50Ω）・TX12V の電流と 2〜5 倍波（スプリアスの規定: 50MHz 帯 1W 超 50W 以下は搬送波より 60dB 低い値）')
+    worst = -999
+    for vs in (12.0, 13.8):
+        for a in ((0.02, 0.05, 0.1, 0.2, 0.3, 0.4, 0.8) if vs == 12.0 else (0.3, 0.8)):
+            p, w, hs, i12 = tx_point(vi=a, vq=0, vs=vs); worst = max(worst, max(hs))
+            print(f'    電源 {vs:4.1f}V 音声 {a*1e3:4.0f}mV: 出力 {w:6.3f}W（{10*math.log10(w/1e-3):5.1f}dBm）、電流 {i12:4.2f}A、2〜5 倍波 ' + ' / '.join(f'{x:+.0f}' for x in hs) + ' dBc')
+    print(f'    高調波の最大 {worst:+.0f}dBc（規定 −60dBc に対して {-60 - worst:.0f}dB の余裕。基板上の結合・発振は含まない）')
+    imd()
+    pi, wi, _, _ = tx_point(vi=0.1, vq=0)
+    pq, wq, _, _ = tx_point(vi=0, vq=0.1)
     ph = math.degrees(cmath.phase(pq / pi)); am = db(abs(pq) / abs(pi))
     # 位相差の 90° からのずれと振幅差による逆側帯波の抑圧
     pe = abs(abs(ph) - 90); k = 10 ** (am / 20); th = math.radians(pe)

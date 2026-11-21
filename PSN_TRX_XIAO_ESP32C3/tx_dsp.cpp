@@ -6,7 +6,7 @@
  * ---- 設定コマンド（USB シリアル、115200 bps。1 行ずつ。w で NVS に保存）----
  *   dsp          設定と動作状態の表示
  *   mic <dB>     マイク利得（-12〜+30 dB。U5A で約 26 dB 増幅済み）
- *   out <%>      出力レベル（変調の深さ、5〜100 %）
+ *   out <%>      出力レベル（変調の深さ、1〜100 %。5W 化（Q18 KSP10）後は 5 % から上げ、尖頭 5W で止める）
  *   iqd <us>     I/Q の遅延補正（-20〜+20 µs。+ で I 側を遅らせる）
  *   iqa <dB>     I/Q の利得補正（-2〜+2 dB。+ で I 側を上げる）
  *   sb usb|lsb   側帯波（Q の符号を反転）
@@ -50,7 +50,8 @@ static uint32_t agcFreq, agcDuty = 0;
 
 static Preferences prefs;
 static struct {
-  float micDb = 0.0f, outPct = 10.0f, iqDelayUs = 0.0f, iqGainDb = 0.0f;   // 出力 10 % で旧回路の変調器入力（マイク 1 Pa で約 13 mVrms）と同程度
+  float micDb = 0.0f, outPct = 5.0f, iqDelayUs = 0.0f, iqGainDb = 0.0f;    // 5W 化（2026-11-22、Q18 KSP10・π 整合）で励振の利得が上がったので初期値を 10 → 5 %。
+                                                                             // 尖頭 5W を超えないよう、ダミーロードと電力計で合わせてから w で保存する
   bool lsb = false;
   bool alcOn = true;
   float alcDb = -20.0f;                   // ALC の効き始め [dBFS]。出力 10 % で変調器ドライブ（Q15・Q16）の歪み約 1 %（−6 では 7〜8 %）
@@ -356,7 +357,7 @@ bool dspCommand(String line) {
   float v = arg.toFloat();
   if      (cmd == "dsp")  { dspPrintStatus(); return true; }
   else if (cmd == "mic")  cfg.micDb = constrain(v, -12, 30);
-  else if (cmd == "out")  cfg.outPct = constrain(v, 5, 100);
+  else if (cmd == "out")  cfg.outPct = constrain(v, 1, 100);
   else if (cmd == "iqd")  cfg.iqDelayUs = constrain(v, -20, 20);
   else if (cmd == "iqa")  cfg.iqGainDb = constrain(v, -2, 2);
   else if (cmd == "sb")   cfg.lsb = arg.startsWith("l") || arg.startsWith("L");

@@ -22,7 +22,7 @@ def circuit():
     # 受信 LO バッファ Q4、送信 Q17・Q18
     e += [JFET('Q4', 'J2SK439'), R('R7'), R('R6'), WIND('L3'),
           JFET('Q17', 'J2SK439'), R('R65'), WIND('L13'), WIND('L12'),
-          BJT('Q18', 'Q2SC1815'), R('R66'), R('R67'), R('R68'), WIND('L14')]
+          BJT('Q18', 'QKSP10'), R('R66'), R('R67'), R('R68'), WIND('L14')]
     # 送信 AF: マイク Q14、マイクアンプ U5A、Q15/Q16（U7 の PDM 出力は C72/C70 で直流を切る）
     e += [BJT('Q14', 'Q2SC1815'), R('R45'), R('R46'), R('R44'), R('R42'), R('R43'),
           f"IMIC {pin('J7','2')} 0 DC 0.5m",

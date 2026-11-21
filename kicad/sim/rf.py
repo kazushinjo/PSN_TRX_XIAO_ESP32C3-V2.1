@@ -16,30 +16,40 @@ def lturns(ref, k=1.0, fq=50.5e6):
     lv = AL[core] * n * n * k
     return L(ref, 2 * math.pi * fq * lv / QL[core], lv)
 
-def lpf(k, coss, tc1, kt=1.0, tc2=6.5e-12, src=50, fr=50.5e6):
-    """Q19 ドレイン（50Ω 源、Coss・RFC1 並列）→ C94 → C98 → L16 → [C99+TC3] → L17 → [C101、トラップ L18+(C100∥TC4)] → L19 → [C102、C103] → 50Ω"""
+DRAIN = pin('Q19', 'D')
+RD_OPT = 12.5   # 12V で 5W を出すためにドレインに見せたい負荷（Ω）
+
+def lpf(k, coss, tc1, kt=1.0, tc2=6.5e-12, src=RD_OPT, fr=50.5e6):
+    """Q19 ドレイン（src Ω 源、Coss・RFC1 並列）→ [C111]（π 整合）→ L21 → C94（直流カット）→ [C98] → L16 → [C99+TC3] → L17 → [C101、トラップ L18+(C100∥TC4)] → L19 → [C102、C103] → 50Ω
+    C111・L21・C98 の π 整合でドレインの約 12.5Ω を 50Ω に変換し、C98 は LPF の入力側シャントも兼ねる"""
     used['TC3'] = tc1; used['TC4'] = tc2
-    e = [C('C94'), C('C98'), lturns('L16', k), C('C99'), f"CTC1 {pin('TC3','1')} 0 {tc1}",
+    e = [C('C111'), L('L21', 0.13), C('C94'), C('C98'), lturns('L16', k), C('C99'), f"CTC1 {pin('TC3','1')} 0 {tc1}",
          lturns('L17', k), C('C101'), lturns('L18', kt, 101e6), C('C100'), f"CTC2 {pin('TC4','1')} 0 {tc2}",
          lturns('L19', k), C('C102'),
          # C103（5p）は TX 検出 D8/D9 へ。検出側を 1k で代用
          C('C103'), f"RDET {pin('C103','2')} 0 1k",
-         f"COSS {pin('C94','1')} 0 {coss}",
-         f"LRFC {pin('C94','1')} rfc 10u\nRRFC rfc 0 0.3\nCRFC {pin('C94','1')} 0 3p",
+         f"COSS {DRAIN} 0 {coss}",
+         f"LRFC {DRAIN} rfc 10u\nRRFC rfc 0 0.3\nCRFC {DRAIN} 0 3p",
          f"RLOAD {pin('C102','1')} 0 50"]
     return f"""lpf
 VS src 0 AC 2
-RS src {pin('C94','1')} {src}
+RS src {DRAIN} {src}
 """ + '\n'.join(e) + f"\n.ac lin 1 {fr} {fr}\n"
 
-def lpf_point(fr, *a, **kw):
-    ngs.run(lpf(*a, fr=fr, **kw))
-    vin = ngs.vec(pin('C94', '1'))[0]; vo = ngs.vec(pin('C102', '1'))[0]
-    zin = 50 * vin / (2 - vin)
-    return 20 * math.log10(abs(vo)), -20 * math.log10(max(abs((zin - 50) / (zin + 50)), 1e-6))
+def lpf_point(fr, *a, src=RD_OPT, **kw):
+    """利得（整合時 0dB）と、src Ω に対する反射減衰量"""
+    ngs.run(lpf(*a, fr=fr, src=src, **kw))
+    vin = ngs.vec(DRAIN)[0]; vo = ngs.vec(pin('C102', '1'))[0]
+    zin = src * vin / (2 - vin)
+    return 20 * math.log10(abs(vo)) - 10 * math.log10(50 / src), -20 * math.log10(max(abs((zin - src) / (zin + src)), 1e-6))
+
+def drain_z(fr, k=1.0, coss=18e-12, tc1=11e-12, kt=1.0, tc2=6.5e-12):
+    """ドレインから見た負荷（Coss・RFC1 を含む）"""
+    net = lpf(k, coss, tc1, kt, tc2, fr=fr).replace('VS src 0 AC 2\n', f'IS 0 {DRAIN} AC 1\n').replace(f"RS src {DRAIN} {RD_OPT}\n", '')
+    ngs.run(net); return ngs.vec(DRAIN)[0]
 
 def pa_lpf():
-    print('PA 出力 LPF（7 素子＋2 倍波トラップ、50Ω 源・50Ω 負荷、出力は整合時 0dB 基準）')
+    print(f'PA 出力 π 整合（C111・L21・C98）＋ LPF（7 素子＋2 倍波トラップ）。ドレイン側 {RD_OPT}Ω 源・50Ω 負荷、出力は整合時 0dB 基準、反射減衰量は {RD_OPT}Ω に対して')
     print('  L19/L16/L17 のばらつき・Coss・トラップ L のばらつきごとに、TC4 を 2 倍波最小、TC3 を反射減衰量最大に合わせた結果')
     print(' L×   Coss | L18×  | TC4[pF] | TC3[pF] | 反射減衰量 | 挿入損失 | 2倍波 | 3倍波 | 4倍波 | TC4 未調整(6.5p)の2倍波')
     for k, coss, kt in itertools.product([0.93, 1.0, 1.07], [18e-12, 25e-12], [0.93, 1.07]):
@@ -49,6 +59,9 @@ def pa_lpf():
         h = [lpf_point(50.5e6 * m, k, coss, tc1, kt, tc2)[0] + il for m in (2, 3, 4)]
         hu = lpf_point(101e6, k, coss, tc1, kt, 6.5e-12)[0] + il
         print(f" {k:.2f} {coss*1e12:3.0f}p | {kt:.2f}  |  {tc2*1e12:5.2f}  |  {tc1*1e12:4.0f}   |   {rl:5.1f}    |  {il:5.2f}   | {h[0]:6.1f} | {h[1]:6.1f} | {h[2]:6.1f} | {hu:6.1f}")
+    z0 = drain_z(50.5e6); za, zb = drain_z(50.0e6), drain_z(51.0e6)
+    print(f'  ドレインから見た負荷（L×1.00・Coss 18p・TC3 11p）: 50.5MHz {z0.real:.1f}{z0.imag:+.1f}j Ω（50.0MHz {za.real:.1f}{za.imag:+.1f}j、51.0MHz {zb.real:.1f}{zb.imag:+.1f}j）、'
+          f'2 倍波 {abs(drain_z(101e6)):.1f}Ω・3 倍波 {abs(drain_z(151.5e6)):.1f}Ω（高調波はドレインで低いインピーダンスに落ちる）')
 
 def pa_input():
     """L14 リンク（50Ω と仮定）→ C92 →（C93 で GND へ、V2 Ver 1.4）→ L15 → ゲート（R69→VR7 ワイパー、Ciss/Crss/gm）。部品のつながりは回路図のネットのまま"""

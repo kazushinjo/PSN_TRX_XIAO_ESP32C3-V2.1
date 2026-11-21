@@ -3,7 +3,7 @@
 import ngs, math, re
 from gen import *
 from af import mic_circuit, out_circuit, rx_circuit
-from rf import lpf
+from rf import lpf, DRAIN, RD_OPT
 
 # NJM2904（5V 単電源）の出力振幅の制限: 下 0.03V、上 V+ −1.4V（データシートの VOH 下限付近）
 OAR = """
@@ -97,34 +97,44 @@ def driver_level():
 
 # ---------------------------------------------------------------- PA 大信号
 PA_MODEL = ".model RD06 NMOS(LEVEL=1 VTO=3.0 KP=1.2 LAMBDA=0.01 RD=0.25 RS=0.05)"
+_H = {}
+def lpf_h(m):
+    """C98 の点（π 整合の 50Ω 側）からアンテナ端（C102）までの通り方（交流解析、TC3 11p・TC4 6.5p）。
+    高調波は、過渡解析で C98 の点の電圧を求め、これを掛けて出す（出力端の小さな値を過渡解析で直接読むと計算の誤差が大きい）"""
+    if m not in _H:
+        ngs.run(lpf(1.0, 18e-12, 11e-12, 1.0, 6.5e-12, fr=50.5e6 * m))
+        _H[m] = ngs.vec(pin('C102', '1'))[0] / ngs.vec(pin('C98', '1'))[0]
+    return _H[m]
+
 def pa_point(vgpk, idq, vs=12.0):
     vg0 = 3.0 + math.sqrt(2 * idq / 1.2)
     net = lpf(1.0, 18e-12, 11e-12, 1.0, 6.5e-12)
-    net = net.replace('VS src 0 AC 2\n', '').replace(f"RS src {pin('C94','1')} 50\n", '')
+    net = net.replace('VS src 0 AC 2\n', '').replace(f"RS src {DRAIN} {RD_OPT}\n", '')
     net = net.replace('RRFC rfc 0 0.3', 'RRFC rfc n_sup 0.3')
     net += f"""
 {PA_MODEL}
 VTX n_sup 0 DC {vs}
 VG g 0 DC {vg0} SIN({vg0} {vgpk} 50.5e6)
-M3 {pin('C94','1')} g 0 0 RD06 W=1 L=1
+M3 {DRAIN} g 0 0 RD06 W=1 L=1
 """
     tran(net, 0.05e-9, 3.0e-6, 2.0e-6)
     t = lin(0.05e-9)
-    vl = ngs.vec(pin('C102', '1')); vd = ngs.vec(pin('C94', '1')); isup = ngs.vec('i(vtx)')
-    hl = harm(t, vl, 50.5e6, 50, 4); hd = harm(t, vd, 50.5e6, 50, 4)
-    pout = (hl[0] / math.sqrt(2)) ** 2 / 50
+    vc = ngs.vec(pin('C98', '1')); vd = ngs.vec(DRAIN); isup = ngs.vec('i(vtx)')
+    hc = harm(t, vc, 50.5e6, 50, 5); hd = harm(t, vd, 50.5e6, 50, 4)
+    ho = [abs(hc[m - 1] * lpf_h(m)) for m in range(1, 6)]
+    pout = (ho[0] / math.sqrt(2)) ** 2 / 50
     pin_dc = -vs * sum(isup) / len(isup)
-    return pout, [20 * math.log10(max(x, 1e-12) / hl[0]) for x in hl[1:]], [20 * math.log10(max(x, 1e-12) / hd[0]) for x in hd[1:]], max(vd), pin_dc
+    return pout, [20 * math.log10(max(x, 1e-15) / ho[0]) for x in ho[1:]], [20 * math.log10(max(x, 1e-12) / hd[0]) for x in hd[1:]], max(vd), pin_dc
 
 def pa():
     print('PA 大信号（RD06HVF1 を 2 乗特性の簡易モデル Vth 3.0V で近似、ゲートを 50.5MHz の正弦波で直接駆動、'
-          'LPF は L×1.00・Coss 18p・TC3 11p・TC4 6.5p、50Ω 負荷、電源 12V）')
-    print('  Idq  | ゲート振幅 | 出力 [W] | 効率 | ドレイン最大 | ドレインの 2/3 倍波 [dBc] | 出力の 2/3/4 倍波 [dBc]')
+          'π 整合 C111 330p・L21 62nH・C98 270p ＋ LPF は L×1.00・Coss 18p・TC3 11p・TC4 6.5p、50Ω 負荷、電源 12V）')
+    print('  Idq  | ゲート振幅 | 出力 [W] | 効率 | 電流 [A] | ドレイン最大 | ドレインの 2/3 倍波 [dBc] | 出力の 2/3/4/5 倍波 [dBc]')
     for idq in (0.05, 0.2):
-        for vg in (0.5, 1.0, 1.5, 2.5):
+        for vg in (0.5, 1.0, 1.5, 2.0, 2.5, 3.0):
             po, hl, hd, vmax, pdc = pa_point(vg, idq)
-            print(f"  {idq*1e3:3.0f}mA |   {vg:3.1f} V    |  {po:5.2f}  | {100*po/pdc:3.0f}% |   {vmax:5.1f} V   |"
-                  f"      {hd[0]:6.1f} / {hd[1]:6.1f}       |  {hl[0]:6.1f} / {hl[1]:6.1f} / {hl[2]:6.1f}")
+            print(f"  {idq*1e3:3.0f}mA |   {vg:3.1f} V    |  {po:5.2f}  | {100*po/pdc:3.0f}% |   {pdc/12:4.2f}   |   {vmax:5.1f} V   |"
+                  f"      {hd[0]:6.1f} / {hd[1]:6.1f}       |  {hl[0]:6.1f} / {hl[1]:6.1f} / {hl[2]:6.1f} / {hl[3]:6.1f}")
 
 # ---------------------------------------------------------------- 電源投入・送信開始
 def power_on():
