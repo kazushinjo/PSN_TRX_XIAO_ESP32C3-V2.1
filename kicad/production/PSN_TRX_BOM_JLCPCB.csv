@@ -32,7 +32,7 @@ Comment,Designator,Footprint,LCSC Part #
 1N4148,"D2,D3",D_DO-35_SOD27_P2.54mm_Vertical_CathodeUp,
 1N60,"D4,D5,D6,D7,D8,D9",D_DO-35_SOD27_P2.54mm_Vertical_CathodeUp,
 1N5819,D10,D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp,
-RF_IN,J1,SolderWire_1x02_P2.54mm_D1.1mm,
+RF_IN,J1,SolderWire_1x02_P5.08mm_D1.1mm,
 PWR_IN,J2,SolderWire_1x02_P5.08mm_D1.6mm,
 Volume,"J3,J5",PinHeader_1x03_P2.54mm_Vertical,
 AE-ADS1015,J4,AE-ADS1015_Vertical,

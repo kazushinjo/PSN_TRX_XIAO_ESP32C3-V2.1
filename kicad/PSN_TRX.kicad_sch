@@ -44575,7 +44575,7 @@
 				)
 			)
 		)
-		(property "Footprint" "PSN_TRX:SolderWire_1x02_P2.54mm_D1.1mm"
+		(property "Footprint" "PSN_TRX:SolderWire_1x02_P5.08mm_D1.1mm"
 			(at 120.65 284.48 0)
 			(hide yes)
 			(show_name no)

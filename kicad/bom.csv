@@ -32,7 +32,7 @@
 "D2,D3","1N4148","Diode_THT:D_DO-35_SOD27_P2.54mm_Vertical_CathodeUp","2",""
 "D4-D9","1N60","Diode_THT:D_DO-35_SOD27_P2.54mm_Vertical_CathodeUp","6",""
 "D10","1N5819","Diode_THT:D_DO-41_SOD81_P5.08mm_Vertical_AnodeUp","1",""
-"J1","RF_IN","PSN_TRX:SolderWire_1x02_P2.54mm_D1.1mm","1",""
+"J1","RF_IN","PSN_TRX:SolderWire_1x02_P5.08mm_D1.1mm","1",""
 "J2","PWR_IN","PSN_TRX:SolderWire_1x02_P5.08mm_D1.6mm","1",""
 "J3,J5","Volume","Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical","2",""
 "J4","AE-ADS1015","PSN_TRX:AE-ADS1015_Vertical","1",""
