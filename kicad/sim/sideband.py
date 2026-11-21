@@ -4,7 +4,7 @@
   下: 1 kHz の試験トーン（tone 1000、USB）を送信したときの、搬送波付近のスペクトルの見え方
   RF 側（Si5351 の 2 出力の位相・変調器の平衡）のずれは基板の計算に入らないので、参考に 1°・0.1 dB の場合を重ねる。
 
-  使い方: kicad/sim で  <numpy と matplotlib の入った python3> sideband.py  → sideband_suppression.png
+  使い方: kicad/sim で  <numpy と matplotlib の入った python3> sideband.py  → ../../docs/images/sideband_suppression.png
 """
 import math, os
 import numpy as np
@@ -80,7 +80,7 @@ def main():
     fig.text(0.01, 0.005, '計算: U7 の複素 FIR（tx_dsp.cpp と同じ係数）× PDM 出力〜変調器入力（ngspice）。'
              '搬送波の漏れと RF 側のずれ（参考の線を除く）は含まない。', fontsize=8, color='0.35')
     fig.tight_layout(rect=(0, 0.02, 1, 0.98))
-    out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'sideband_suppression.png')
+    out = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'docs', 'images', 'sideband_suppression.png')
     fig.savefig(out, dpi=110); print('→', out)
 
 

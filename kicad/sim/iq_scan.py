@@ -1,10 +1,11 @@
 """送信 AF の I/Q 位相差を周波数スキャンしてグラフにする（V2）
 
   U7 の複素 FIR（tx_dsp.cpp と同じ作り方・同じ int16 量子化）× PDM 出力〜変調器入力のアナログ部（ngspice）で、
-  I と Q の位相差が 90° からどれだけずれるか、振幅差、そこから決まる逆側帯波の抑圧を 100〜4000 Hz で求める。
+  I と Q の位相差が 90° からどれだけずれるか、振幅差を 100〜3200 Hz で求めて図にする（逆側帯波の抑圧は数値だけ出す。
+  抑圧のグラフは sideband.py の図にあるので、ここでは描かない）。
   RC のばらつき（I +3%・Q −3%）と、ファームウェアの iqd・iqa で補正した後も並べる。
 
-  使い方: kicad/sim で  <numpy と matplotlib の入った python3> iq_scan.py  → iq_scan.png と数値の要約
+  使い方: kicad/sim で  <numpy と matplotlib の入った python3> iq_scan.py  → ../../docs/images/iq_phase_scan.png と数値の要約
 """
 import math, os
 import numpy as np
@@ -82,26 +83,23 @@ def main():
     if os.path.exists(fp):
         font_manager.fontManager.addfont(fp)
         plt.rcParams['font.family'] = font_manager.FontProperties(fname=fp).get_name()
-    fig, ax = plt.subplots(3, 1, figsize=(9, 10), sharex=True)
+    fig, ax = plt.subplots(2, 1, figsize=(9, 7.2), sharex=True)
     m = (F >= BAND[0]) & (F <= BAND[1])
     print('通過域 300〜2700 Hz での最悪値')
     for name, I, Q, col, ls in cases:
         pe, ae, s = metrics(I, Q)
         ax[0].plot(F, pe, col, ls=ls, label=name)
         ax[1].plot(F, ae, col, ls=ls, label=name)
-        ax[2].plot(F, np.minimum(s, 90), col, ls=ls, label=name)
         print(f'  {name}: 位相誤差 {np.max(np.abs(pe[m])):.3f}°  振幅差 {np.max(np.abs(ae[m])):.3f} dB  抑圧 {np.min(s[m]):.1f} dB')
     for a in ax:
         a.axvspan(*BAND, color='0.92', zorder=0); a.grid(True, alpha=0.4)
     ax[0].set_ylabel('位相誤差 [°]\n（I−Q 位相差 − 90°）'); ax[0].set_ylim(-2.5, 0.5)
     ax[1].set_ylabel('振幅差 I/Q [dB]'); ax[1].set_ylim(-1, 1)
-    ax[2].set_ylabel('逆側帯波の抑圧 [dB]'); ax[2].set_ylim(0, 90)
-    ax[2].axhline(40, color='k', lw=0.8, ls=':'); ax[2].text(120, 41, '40 dB', fontsize=9)
-    ax[2].set_xlabel('音声周波数 [Hz]（灰色は通過域 300〜2700 Hz）'); ax[2].set_xlim(F[0], F[-1])
+    ax[1].set_xlabel('音声周波数 [Hz]（灰色は通過域 300〜2700 Hz）。逆側帯波の抑圧は「不要側波帯の抑圧比」の図'); ax[1].set_xlim(F[0], F[-1])
     ax[0].legend(fontsize=9, loc='upper center')
-    fig.suptitle('PSN_TRX-V2 送信 AF の I/Q 位相差（シミュレーション）')
+    fig.suptitle('PSN_TRX-V2 送信 AF の I/Q の位相差と振幅差（シミュレーション）')
     fig.tight_layout()
-    out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'iq_scan.png')
+    out = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'docs', 'images', 'iq_phase_scan.png')
     fig.savefig(out, dpi=110); print('→', out)
 
 
