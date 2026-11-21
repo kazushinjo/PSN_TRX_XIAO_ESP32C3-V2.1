@@ -1,4 +1,4 @@
-# PSN_TRX V2 部品表（BOM）
+# PSN_TRX V2.1 部品表（BOM）基板 Ver 2.1.0
 
 50MHz 帯 PSN 方式 SSB トランシーバ V2（受信部は IF 12MHz の SSB シングルスーパー）。回路図 (`PSN_TRX.kicad_sch`) から `kicad-cli sch export bom` で自動生成した [`bom.csv`](bom.csv) を整形したもの。
 

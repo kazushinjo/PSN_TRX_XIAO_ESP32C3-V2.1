@@ -78406,7 +78406,7 @@
 		(layer "Edge.Cuts")
 		(uuid "9bab4fd8-4312-44a7-89de-337916611f10")
 	)
-	(gr_text "V2 Ver 1.4"
+	(gr_text "Ver 2.1.0"
 		(at 151.300001 148.399999 0)
 		(layer "F.SilkS")
 		(uuid "b9e1a638-9b79-4afa-850b-ed8587ccb413")
