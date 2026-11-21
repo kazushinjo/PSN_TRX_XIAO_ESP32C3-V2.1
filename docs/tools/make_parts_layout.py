@@ -37,7 +37,7 @@ OUT = sys.argv[3]
 PNGDIR = sys.argv[4] if len(sys.argv) > 4 else None
 
 TITLE = 'PSN_TRX_XIAO_ESP32C3-V2　部品実装図'
-SUB = '基板 134.1 × 129.7 mm / 4層 / すべてリード部品（U1・U2 は NJM2594V SIP 化基板）　V2 Ver 1.4　2026-11-21'
+SUB = '基板 134.1 × 129.7 mm / 4層 / すべてリード部品（U1・U2 は NJM2594V SIP 化基板）　V2 Ver 1.4　2026-11-22'
 COPPER = '#c8762f'
 FAB = '#333333'
 FAINT = '#c8c8c8'

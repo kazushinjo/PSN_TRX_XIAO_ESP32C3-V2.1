@@ -17410,7 +17410,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
 			(at 254 518.16 0)
 			(hide yes)
 			(show_name no)
@@ -19373,7 +19373,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+		(property "Footprint" "PSN_TRX:C_Rect_L6.0mm_W3.0mm_P3.50mm_Rubycon_F2D"
 			(at 713.74 643.89 0)
 			(hide yes)
 			(show_name no)
@@ -20136,7 +20136,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
 			(at 532.13 135.89 0)
 			(hide yes)
 			(show_name no)
@@ -21997,7 +21997,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm"
 			(at 396.24 474.98 0)
 			(hide yes)
 			(show_name no)
@@ -22634,7 +22634,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+		(property "Footprint" "PSN_TRX:C_Rect_L6.0mm_W3.0mm_P3.50mm_Rubycon_F2D"
 			(at 701.04 624.84 0)
 			(hide yes)
 			(show_name no)
@@ -23303,7 +23303,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm"
 			(at 157.48 300.99 0)
 			(hide yes)
 			(show_name no)
@@ -26857,7 +26857,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
 			(at 238.76 128.27 0)
 			(hide yes)
 			(show_name no)
@@ -26939,7 +26939,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
 			(at 720.09 525.78 0)
 			(hide yes)
 			(show_name no)
@@ -27187,7 +27187,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
 			(at 697.23 191.77 0)
 			(hide yes)
 			(show_name no)
@@ -27592,7 +27592,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm"
 			(at 524.51 487.68 0)
 			(hide yes)
 			(show_name no)
@@ -32319,7 +32319,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
 			(at 519.43 383.54 0)
 			(hide yes)
 			(show_name no)
@@ -32899,7 +32899,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm"
 			(at 1066.8 144.78 90)
 			(hide yes)
 			(show_name no)
@@ -32992,7 +32992,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
 			(at 703.58 496.57 0)
 			(hide yes)
 			(show_name no)
@@ -34034,7 +34034,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm"
 			(at 509.27 135.89 0)
 			(hide yes)
 			(show_name no)
@@ -34193,7 +34193,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm"
 			(at 185.42 151.13 0)
 			(hide yes)
 			(show_name no)
@@ -34854,7 +34854,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
 			(at 577.85 135.89 0)
 			(hide yes)
 			(show_name no)
@@ -35674,7 +35674,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+		(property "Footprint" "PSN_TRX:C_Disc_W5.5mm_T3.2mm_P5.00mm_Akizuki_RDER72E"
 			(at 302.26 453.39 0)
 			(hide yes)
 			(show_name no)
@@ -37831,7 +37831,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm"
 			(at 455.93 135.89 0)
 			(hide yes)
 			(show_name no)
@@ -39344,7 +39344,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+		(property "Footprint" "PSN_TRX:C_Disc_W5.5mm_T3.2mm_P5.00mm_Akizuki_RDER72E"
 			(at 304.8 501.65 0)
 			(hide yes)
 			(show_name no)
@@ -39425,7 +39425,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
 			(at 304.8 481.33 0)
 			(hide yes)
 			(show_name no)
@@ -41693,7 +41693,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm"
 			(at 554.99 135.89 0)
 			(hide yes)
 			(show_name no)
@@ -42511,7 +42511,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
 			(at 486.41 135.89 0)
 			(hide yes)
 			(show_name no)
@@ -42828,7 +42828,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+		(property "Footprint" "PSN_TRX:C_Rect_L6.0mm_W3.0mm_P3.50mm_Rubycon_F2D"
 			(at 695.96 643.89 0)
 			(hide yes)
 			(show_name no)
@@ -43892,7 +43892,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm"
 			(at 469.9 481.33 0)
 			(hide yes)
 			(show_name no)
@@ -44447,7 +44447,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+		(property "Footprint" "PSN_TRX:C_Rect_L6.0mm_W3.0mm_P3.50mm_Rubycon_F2D"
 			(at 684.53 624.84 0)
 			(hide yes)
 			(show_name no)
@@ -46014,7 +46014,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
 			(at 706.12 525.78 0)
 			(hide yes)
 			(show_name no)
@@ -47087,7 +47087,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm"
 			(at 1042.67 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -47740,7 +47740,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:CP_Radial_D5.0mm_P2.00mm"
 			(at 327.66 435.61 0)
 			(hide yes)
 			(show_name no)
@@ -48003,7 +48003,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
 			(at 717.55 496.57 0)
 			(hide yes)
 			(show_name no)
@@ -49231,7 +49231,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D3.0mm_W1.6mm_P2.50mm"
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
 			(at 636.27 120.65 0)
 			(hide yes)
 			(show_name no)
@@ -51493,7 +51493,7 @@
 				)
 			)
 		)
-		(property "Footprint" "PSN_TRX:C_Radial_D5.0mm_P2.00mm_CPpad"
+		(property "Footprint" "Capacitor_THT:C_Disc_D3.8mm_W2.6mm_P2.50mm"
 			(at 816.61 607.06 0)
 			(hide yes)
 			(show_name no)
