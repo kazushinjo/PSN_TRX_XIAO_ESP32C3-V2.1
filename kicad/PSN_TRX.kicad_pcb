@@ -40042,7 +40042,7 @@
 		(descr "Through hole straight pin header, 1x04, 2.54mm pitch, single row")
 		(tags "Through hole pin header THT 1x04 2.54mm single row")
 		(property "Reference" "J7"
-			(at 0 11.6525 0)
+			(at -3 3.8125 0)
 			(layer "F.SilkS")
 			(uuid "84087f26-f56f-493b-bfde-7904eaeedd6c")
 			(effects
@@ -78406,10 +78406,10 @@
 		(layer "Edge.Cuts")
 		(uuid "9bab4fd8-4312-44a7-89de-337916611f10")
 	)
-	(gr_text "Ver 2.1.0"
-		(at 151.300001 148.399999 0)
+	(gr_text "Designed by JA6FUF"
+		(at 129.6 150.1 0)
 		(layer "F.SilkS")
-		(uuid "b9e1a638-9b79-4afa-850b-ed8587ccb413")
+		(uuid "e0c65c78-6d73-44b8-b18b-405fcb2ff3c2")
 		(effects
 			(font
 				(size 1.5 1.5)
@@ -78417,10 +78417,10 @@
 			)
 		)
 	)
-	(gr_text "Designed by JA6FUF"
-		(at 152.5 145.835 0)
+	(gr_text "Ver 2.1.0"
+		(at 135.3 152.8 0)
 		(layer "F.SilkS")
-		(uuid "e0c65c78-6d73-44b8-b18b-405fcb2ff3c2")
+		(uuid "b9e1a638-9b79-4afa-850b-ed8587ccb413")
 		(effects
 			(font
 				(size 1.5 1.5)
