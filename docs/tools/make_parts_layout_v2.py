@@ -43,7 +43,7 @@ notes = json.load(open(sys.argv[2]))
 OUT = sys.argv[3]
 
 TITLE = 'PSN_TRX_XIAO_ESP32C3-V2　部品実装図（段階組立・通電確認）'
-SUB = '基板 134.1 × 129.7 mm / 4 層 / 基板 V2 Ver 1.4　部品実装図（段階組立）　2026-11-20　調整の番号は manual/調整手順.md'
+SUB = '基板 134.1 × 129.7 mm / 4 層 / 基板 V2 Ver 1.4　部品実装図（段階組立）　2026-11-21　調整の番号は manual/調整手順.md'
 COPPER = '#c8762f'
 FAB = '#333333'
 DONE = '#8a8a8a'

@@ -14,7 +14,7 @@ from docx.oxml.ns import qn
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 DOCS = os.path.join(ROOT, 'docs')
-DATE = '2026-11-20'
+DATE = '2026-11-21'
 VER = 'V2 Ver 1.4'
 TSTYLE = 'Light Grid Accent 1'
 
