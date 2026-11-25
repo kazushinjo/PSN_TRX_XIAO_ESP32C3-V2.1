@@ -32,7 +32,8 @@
  *   t5 : RIT         ("RIT +0.25k"、RIT 0 のときは空欄)
  *   追加表示（2026-11-25、画面データ（.tft）は変えずにスケッチだけで表示）:
  *     バンド外の警告 : 送信する電波がバンドプランの区分（SSB: SSB_MIN_HZ〜BAND_MAX_HZ、AM: AM_MIN_HZ〜BAND_MAX_HZ）から外れる周波数では t0 を赤にする
- *                      赤のときは送信しない（2026-11-26）: 送信検出が来ても Si5351 の出力を止め、t4 に赤い "NO TX"、t6 に赤い "BAND OUT"
+ *                      赤でも送信はできる。アマチュアバンド（HAM_MIN_HZ〜HAM_MAX_HZ）から電波が出るときだけ送信しない（2026-11-26）:
+ *                      送信検出が来ても Si5351 の出力を止め、t4 に赤い "NO TX"、t6 に赤い "BAND OUT"
  *     送信時間       : 送信中は t6 に "TX 0:42"。TX_WARN_SEC を超えると赤
  *     ピークホールド : 受信中、直前のピークの位置に赤い短い線（針の先の部分）を PEAK_HOLD_MS 残す
  *     ダイヤルロック : 設定モードの LOCK で ON/OFF。ON のときは t1 に "LOCK" が付き、ダイヤルで周波数が変わらない
@@ -167,6 +168,12 @@ Preferences prefs;
 #define AM_MIN_HZ    51000000L
 #define BAND_MAX_HZ  52900000L
 #define SSB_BW_HZ    3000L
+// ---- 送信の禁止（アマチュアバンドの外）----
+// 送信する電波が 6m のアマチュアバンド（50.000〜54.000MHz）から出るときだけ送信しない（局発を止める）。
+// バンドプランの区分の外（赤表示）でも、アマチュアバンドの中なら送信できる
+// （周波数は 50.000〜52.900MHz までなので、出るのは下端の AM（50.0025MHz 未満）と LSB（50.003MHz 未満）だけ）
+#define HAM_MIN_HZ   50000000L
+#define HAM_MAX_HZ   54000000L
 
 // ---- 送信時間・ピークホールド ----
 #define TX_WARN_SEC  180       // 送信時間がこれを超えると t6 を赤くする（0 = 赤くしない）
@@ -326,10 +333,11 @@ long activeRit() {
   return ritHz;
 }
 
-// バンド外では送信しない: 送信する電波がバンドプランの区分を出る（周波数が赤の）ときは、
-// 送信中でも CLK0・CLK1・CLK2 を止めて、変調器に局発を入れない（電波が出ない）
-bool outOfBand(long f);
-bool txInhibited() { return txNow && outOfBand(currentFreq); }
+// アマチュアバンドの外では送信しない: 送信する電波が 50.000〜54.000MHz から出るときは、
+// 送信中でも CLK0・CLK1・CLK2 を止めて、変調器に局発を入れない（電波が出ない）。
+// バンドプランの区分の外（周波数が赤）だけなら送信する
+bool outOfHamBand(long f);
+bool txInhibited() { return txNow && outOfHamBand(currentFreq); }
 
 void applyFreq() {
   if (txInhibited()) {
@@ -418,12 +426,24 @@ void uiLine(char* buf, size_t len) {
   }
 }
 
-// 送信する電波がバンドプランの区分から外れるか（側帯波で占有する側を見る。AM は上下とも）
+// 送信する電波の範囲（側帯波で占有する側を見る。AM は上下とも）
+void txSpan(long f, long* lo, long* hi) {
+  if (dspAm()) { *lo = f - DSP_AM_BW_HZ; *hi = f + DSP_AM_BW_HZ; }
+  else         { *lo = dspLsb() ? f - SSB_BW_HZ : f; *hi = dspLsb() ? f : f + SSB_BW_HZ; }
+}
+
+// 送信する電波がバンドプランの区分から外れるか（赤表示。送信はできる）
 bool outOfBand(long f) {
-  if (dspAm()) return f - DSP_AM_BW_HZ < AM_MIN_HZ || f + DSP_AM_BW_HZ > BAND_MAX_HZ;
-  long lo = dspLsb() ? f - SSB_BW_HZ : f;
-  long hi = dspLsb() ? f : f + SSB_BW_HZ;
-  return lo < SSB_MIN_HZ || hi > BAND_MAX_HZ;
+  long lo, hi;
+  txSpan(f, &lo, &hi);
+  return lo < (dspAm() ? AM_MIN_HZ : SSB_MIN_HZ) || hi > BAND_MAX_HZ;
+}
+
+// 送信する電波がアマチュアバンドから出るか（送信しない）
+bool outOfHamBand(long f) {
+  long lo, hi;
+  txSpan(f, &lo, &hi);
+  return lo < HAM_MIN_HZ || hi > HAM_MAX_HZ;
 }
 
 void ritText(char* buf, size_t len) {
@@ -578,12 +598,12 @@ void updateMeter(int pos, const char* text, const char* agc, const char* agcAmt)
     strncpy(shownText, text, sizeof(shownText) - 1);
   }
   if (agc != shownAgc) {
-    // 送信中の "TX"・バンド外で送信を止めた "NO TX" は赤（63488 = 0xF800）、受信中は白（65535）
+    // 送信中の "TX"・アマチュアバンドの外で送信を止めた "NO TX" は赤（63488 = 0xF800）、受信中は白（65535）
     nxSend(strcmp(agc, "TX") == 0 || strcmp(agc, "NO TX") == 0 ? "t4.pco=63488" : "t4.pco=65535");
     nxSetText("t4", agc);
     shownAgc = agc;
   }
-  // 送信時間が TX_WARN_SEC を超えたら・バンド外で送信を止めたら t6 を赤（63488）に
+  // 送信時間が TX_WARN_SEC を超えたら・アマチュアバンドの外で送信を止めたら t6 を赤（63488）に
   bool red = txInhibited() ||
              (txNow && TX_WARN_SEC > 0 && millis() - txStartMs >= TX_WARN_SEC * 1000UL);
   if (red != shownAmtRed) {
@@ -898,7 +918,7 @@ void loop() {
     txNow = tx;
     if (tx) txStartMs = now;
     applyFreq();
-    Serial.printf("%s %lu ms\n", tx ? (txInhibited() ? "tx: バンド外のため送信しない" : "tx: 送信") : "tx: 受信", now);
+    Serial.printf("%s %lu ms\n", tx ? (txInhibited() ? "tx: アマチュアバンドの外なので送信しない" : "tx: 送信") : "tx: 受信", now);
     lastMeterMs = 0;                        // LCD の表示（TX・ALC メーター）をすぐ切り替える
   }
 
@@ -991,7 +1011,7 @@ void loop() {
   if (now - lastMeterMs >= 100) {
     lastMeterMs = now;
     if (txInhibited()) {
-      // バンド外で送信を止めているとき: 針は 0、t4 に赤い "NO TX"、t6 に赤い "BAND OUT"
+      // アマチュアバンドの外で送信を止めているとき: 針は 0、t4 に赤い "NO TX"、t6 に赤い "BAND OUT"
       alcLevelDb = -60.0f;
       peakPos = -1;
       peakDb = -60.0f;
