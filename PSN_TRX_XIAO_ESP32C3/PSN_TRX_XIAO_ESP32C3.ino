@@ -32,6 +32,7 @@
  *   t5 : RIT         ("RIT +0.25k"、RIT 0 のときは空欄)
  *   追加表示（2026-11-25、画面データ（.tft）は変えずにスケッチだけで表示）:
  *     バンド外の警告 : 送信する電波がバンドプランの区分（SSB: SSB_MIN_HZ〜BAND_MAX_HZ、AM: AM_MIN_HZ〜BAND_MAX_HZ）から外れる周波数では t0 を赤にする
+ *                      赤のときは送信しない（2026-11-26）: 送信検出が来ても Si5351 の出力を止め、t4 に赤い "NO TX"、t6 に赤い "BAND OUT"
  *     送信時間       : 送信中は t6 に "TX 0:42"。TX_WARN_SEC を超えると赤
  *     ピークホールド : 受信中、直前のピークの位置に赤い短い線（針の先の部分）を PEAK_HOLD_MS 残す
  *     ダイヤルロック : 設定モードの LOCK で ON/OFF。ON のときは t1 に "LOCK" が付き、ダイヤルで周波数が変わらない
@@ -325,9 +326,19 @@ long activeRit() {
   return ritHz;
 }
 
+// バンド外では送信しない: 送信する電波がバンドプランの区分を出る（周波数が赤の）ときは、
+// 送信中でも CLK0・CLK1・CLK2 を止めて、変調器に局発を入れない（電波が出ない）
+bool outOfBand(long f);
+bool txInhibited() { return txNow && outOfBand(currentFreq); }
+
 void applyFreq() {
-  if (txNow) setTxClocks(currentFreq);
-  else       setRxClocks(currentFreq + activeRit());
+  if (txInhibited()) {
+    si5351.output_enable(SI5351_CLK0, 0);
+    si5351.output_enable(SI5351_CLK1, 0);
+    si5351.output_enable(SI5351_CLK2, 0);
+  }
+  else if (txNow) setTxClocks(currentFreq);   // set_freq_manual が出力を有効に戻す
+  else            setRxClocks(currentFreq + activeRit());
 }
 
 // ---- 設定モードの各機能 ----
@@ -567,13 +578,14 @@ void updateMeter(int pos, const char* text, const char* agc, const char* agcAmt)
     strncpy(shownText, text, sizeof(shownText) - 1);
   }
   if (agc != shownAgc) {
-    // 送信中の "TX" は赤（63488 = 0xF800）、受信中は白（65535）
-    nxSend(strcmp(agc, "TX") == 0 ? "t4.pco=63488" : "t4.pco=65535");
+    // 送信中の "TX"・バンド外で送信を止めた "NO TX" は赤（63488 = 0xF800）、受信中は白（65535）
+    nxSend(strcmp(agc, "TX") == 0 || strcmp(agc, "NO TX") == 0 ? "t4.pco=63488" : "t4.pco=65535");
     nxSetText("t4", agc);
     shownAgc = agc;
   }
-  // 送信時間が TX_WARN_SEC を超えたら t6 を赤（63488）に
-  bool red = txNow && TX_WARN_SEC > 0 && millis() - txStartMs >= TX_WARN_SEC * 1000UL;
+  // 送信時間が TX_WARN_SEC を超えたら・バンド外で送信を止めたら t6 を赤（63488）に
+  bool red = txInhibited() ||
+             (txNow && TX_WARN_SEC > 0 && millis() - txStartMs >= TX_WARN_SEC * 1000UL);
   if (red != shownAmtRed) {
     nxSend(red ? "t6.pco=63488" : "t6.pco=65535");
     shownAmtRed = red;
@@ -886,7 +898,7 @@ void loop() {
     txNow = tx;
     if (tx) txStartMs = now;
     applyFreq();
-    Serial.printf("%s %lu ms\n", tx ? "tx: 送信" : "tx: 受信", now);
+    Serial.printf("%s %lu ms\n", tx ? (txInhibited() ? "tx: バンド外のため送信しない" : "tx: 送信") : "tx: 受信", now);
     lastMeterMs = 0;                        // LCD の表示（TX・ALC メーター）をすぐ切り替える
   }
 
@@ -978,7 +990,13 @@ void loop() {
   // Sメーター表示（100ms ごと）
   if (now - lastMeterMs >= 100) {
     lastMeterMs = now;
-    if (txNow) {
+    if (txInhibited()) {
+      // バンド外で送信を止めているとき: 針は 0、t4 に赤い "NO TX"、t6 に赤い "BAND OUT"
+      alcLevelDb = -60.0f;
+      peakPos = -1;
+      peakDb = -60.0f;
+      updateMeter(0, "", "NO TX", "BAND OUT");
+    } else if (txNow) {
       // ALC メーター: すぐ上がり、ゆっくり下がる
       float a = dspAlcLevelDb();
       if (a > alcLevelDb) alcLevelDb = a;

@@ -486,7 +486,7 @@ def vfo_spec():
     D.h('6.3 主な機能', 2)
     D.t(['機能', '内容'], [
         ('周波数範囲', '50.000〜52.900MHz（範囲外は端で止まる。52.90〜54.00MHz は実験・研究用の区分なので出さない）、初期値 50.500MHz'),
-        ('バンド外の警告', 'JARL のバンドプラン（令和 7 年 7 月 17 日施行）で、送信する電波が USB は 50.070〜52.900MHz、AM は 51.000〜52.900MHz を出る周波数では周波数を赤く表示（SSB_MIN_HZ・AM_MIN_HZ・BAND_MAX_HZ）'),
+        ('バンド外の警告', 'JARL のバンドプラン（令和 7 年 7 月 17 日施行）で、送信する電波が USB は 50.070〜52.900MHz、AM は 51.000〜52.900MHz を出る周波数では周波数を赤く表示（SSB_MIN_HZ・AM_MIN_HZ・BAND_MAX_HZ）。赤のときは送信しない: 送信検出（D0 LOW）が来ても CLK0・CLK1・CLK2 を止め、t4 に赤い NO TX、t6 に赤い BAND OUT を出す（2026-11-26）'),
         ('送信の 90°', 'set_phase(CLK0, 0)、set_phase(CLK1, 16) の後に PLL をリセット（位相オフセットの単位 Tvco/4 → 90° = 分周比）'),
         ('受信の局発・BFO', 'CLK0 = 表示周波数 + RIT − BFO（PLLA、×20）、CLK2 = BFO（PLLB、×64）。BFO は変わったときだけ設定し直す'),
         ('出力', 'CLK0・CLK1・CLK2 とも駆動電流 8mA'),
@@ -504,10 +504,12 @@ def vfo_spec():
         ('シリアルのコマンド', '115200bps・改行あり。受信中は 0.1 秒ごとに「rssi … mV agc … S … dB」を出す。bfo（表示・設定）、dsp（表示）、mic・out・iqd・iqa・sb・tone・alc、w（保存）'),
     ])
     D.p('LCD の表示例（PSN_TRX_K035.HMI を Nextion Editor のシミュレータで表示。S7・AGC の値は見本）。'
-        '上: AM モード（51.050.000MHz、AM の区分 51.000〜52.900MHz の中なので周波数は白、STEP の後ろに AM）。'
-        '下: バンド外の警告（AM で 50.620.000MHz。AM の電波 50.6175〜50.6225MHz が AM の区分の外なので周波数が赤。警告だけで送信は止めない）。')
+        '1 枚目: AM モード（51.050.000MHz、AM の区分 51.000〜52.900MHz の中なので周波数は白、STEP の後ろに AM）。'
+        '2 枚目: バンド外の警告（AM で 50.620.000MHz。AM の電波 50.6175〜50.6225MHz が AM の区分の外なので周波数が赤）。'
+        '3 枚目: 赤のまま PTT を押したとき（送信検出は来ているが Si5351 の出力を止めて電波を出さない。NO TX・BAND OUT、針は 0）。')
     D.img(os.path.join(DOCS, 'images', 'lcd_am.png'), 110)
     D.img(os.path.join(DOCS, 'images', 'lcd_am_out_of_band.png'), 110)
+    D.img(os.path.join(DOCS, 'images', 'lcd_no_tx.png'), 110)
 
     D.h('7. 注意事項')
     D.b('Si5351 モジュールの基準水晶が 25MHz 以外（27MHz など）のときは、si5351.init() の第 2 引数を変える。',
