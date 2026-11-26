@@ -55010,6 +55010,374 @@
 	)
 
 
+	(symbol
+		(lib_id "Device:R")
+		(at 430.53 514.35 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "539a3d86-b510-4763-9b09-f7b3eaf7b80c")
+		(property "Reference" "R81"
+			(at 430.53 511.81 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "4.7k"
+			(at 430.53 518.16 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical"
+			(at 430.530 514.350 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 430.530 514.350 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 430.530 514.350 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "9a99abd5-29dc-4637-b1da-8d9e52d679a5")
+		)
+		(pin "2"
+			(uuid "a7378847-2b1f-451c-90dc-38fa1a47ec9a")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "R81")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_Potentiometer")
+		(at 441.96 514.35 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "52c9f3aa-e761-47fc-bed4-d960f7ea086a")
+		(property "Reference" "VR8"
+			(at 444.500 508.508 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10k"
+			(at 444.500 510.540 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Potentiometer_THT:Potentiometer_Bourns_3266W_Vertical"
+			(at 441.960 514.350 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 441.960 514.350 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 441.960 514.350 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "883d2bf1-4525-41af-af35-89ea937cc64e")
+		)
+		(pin "2"
+			(uuid "963e1688-3051-4a8d-90e1-023ba6bf04f9")
+		)
+		(pin "3"
+			(uuid "5b200357-4c4d-41f1-be17-9a05324db225")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "VR8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 453.39 514.35 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "52626fb6-7ba7-467a-a4c1-3f9fb6e342d9")
+		(property "Reference" "C112"
+			(at 450.850 510.286 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100p"
+			(at 457.454 510.794 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
+			(at 453.390 514.350 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 453.390 514.350 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 453.390 514.350 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "ki_description" "Q15バイパス"
+			(at 453.390 514.350 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "cf62a0b8-16d8-4904-93f3-918a46c959ed")
+		)
+		(pin "2"
+			(uuid "e91cbe66-c7c6-419a-9b44-a832109bb6fd")
+		)
+		(instances
+			(project "PSN_TRX"
+				(path "/50835569-93ad-4c8c-aafc-424a6a3761ef"
+					(reference "C112")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(label "CLK2"
+		(at 421.64 514.35 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "5c083a79-7b60-42fd-844b-70bf4b1e6ae2")
+	)
+	(wire
+		(pts
+			(xy 421.64 514.35) (xy 426.72 514.35)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "03abae81-4d27-40e7-a96c-b1f6eb65ba42")
+	)
+	(wire
+		(pts
+			(xy 434.34 514.35) (xy 438.15 514.35)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "17ae31c6-3b47-4fb8-a524-45610489e3c9")
+	)
+	(wire
+		(pts
+			(xy 441.96 510.54) (xy 445.77 510.54)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0e669987-11b4-45fc-9dab-5e144324e030")
+	)
+	(wire
+		(pts
+			(xy 445.77 510.54) (xy 445.77 514.35)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4e958ed9-ac76-4c72-acd1-60b8a56927c5")
+	)
+	(junction
+		(at 445.77 514.35)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c9c1a1c2-138c-4030-adab-8a524b00f48a")
+	)
+	(wire
+		(pts
+			(xy 445.77 514.35) (xy 449.58 514.35)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "40c1b087-c03c-477b-8704-c7cd9f069c8d")
+	)
+	(wire
+		(pts
+			(xy 457.2 514.35) (xy 461.01 514.35)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "27cc96c0-5100-46e2-bcac-0b0ce656fb19")
+	)
+	(label "Q18_B"
+		(at 461.01 514.35 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "86c12629-182d-4ee5-ac51-e0f83e594e81")
+	)
+	(label "Q18_B"
+		(at 426.72 476.25 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "38e64fa3-4848-415b-aa30-224998ff3537")
+	)
+	(label "CLK2"
+		(at 739.14 494.03 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "70052c9b-9cee-4663-9f7d-52559a01fa84")
+	)
+	(text "AM の搬送波（案 A、2026-11-26）: AM 送信中だけ CLK2 を PLLA の表示周波数で出し、\nR81・VR8・C112 で Q18 のベースに足す（VR8 で搬送波 約 1W）。J3E 送信中は CLK2 を止め、受信中は BFO"
+		(exclude_from_sim no)
+		(at 421.64 523.24 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "1153b719-e277-4bf9-b3f9-1a45ee209b98")
+	)
 	(sheet_instances
 		(path "/"
 			(page "1")
